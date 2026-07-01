@@ -1,0 +1,294 @@
+
+<h2 class="sr-only">The FlowForward Operational Cost Estimator — estimate the hidden cost of operational inefficiency and what structured transformation may save your organization</h2>
+
+<link href="https://fonts.googleapis.com/css2?family=Aleo:wght@400;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body, .est-wrap { font-family: 'Montserrat', sans-serif; }
+.est-wrap { max-width: 680px; padding: 2rem 0 2.5rem; }
+
+.est-header { margin-bottom: 1.75rem; }
+.est-header h1 { font-family: 'Aleo', serif; font-size: 22px; font-weight: 700; color: #1B2A4E; margin-bottom: 0.5rem; }
+.est-header p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.6; max-width: 560px; }
+
+.est-divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 1.5rem 0; }
+
+.est-context { background: #FFE4BE22; border-left: 3px solid #FFBB99; border-radius: 0; padding: 1rem 1.25rem; margin-bottom: 1.75rem; font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+
+.est-section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #6B8DD6; margin-bottom: 1rem; }
+
+.input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+@media (max-width: 480px) { .input-grid { grid-template-columns: 1fr; } }
+
+.input-group { display: flex; flex-direction: column; gap: 6px; }
+.input-group label { font-size: 12px; color: var(--color-text-secondary); font-weight: 500; }
+.input-group input, .input-group select {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  padding: 8px 12px;
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  width: 100%;
+}
+.input-group input:focus, .input-group select:focus { outline: none; border-color: #6B8DD6; }
+.input-hint { font-size: 11px; color: var(--color-text-tertiary); margin-top: 2px; }
+
+.slider-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1.25rem; }
+.slider-group label { font-size: 12px; color: var(--color-text-secondary); font-weight: 500; }
+.slider-row { display: flex; align-items: center; gap: 12px; }
+.slider-row input[type=range] { flex: 1; }
+.slider-val { font-size: 13px; font-weight: 500; color: #1B2A4E; min-width: 36px; text-align: right; }
+
+.calc-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: #1B2A4E;
+  color: #FFE4BE;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.15s;
+}
+.calc-btn:hover { background: #243761; }
+
+.results-wrap { margin-top: 2rem; display: none; }
+.results-wrap.visible { display: block; }
+
+.results-headline { font-family: 'Aleo', serif; font-size: 18px; font-weight: 700; color: #1B2A4E; margin-bottom: 1.25rem; }
+
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+
+.metric-card {
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-md);
+  padding: 1rem;
+  text-align: center;
+}
+.metric-label { font-size: 11px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 6px; line-height: 1.4; }
+.metric-value { font-size: 22px; font-weight: 500; color: #1B2A4E; line-height: 1.1; }
+.metric-value.coral { color: #FF8A6B; }
+.metric-value.blue { color: #6B8DD6; }
+.metric-value.green { color: #0F6E56; }
+
+.breakdown-card {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+.breakdown-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 1rem; }
+.breakdown-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 13px; }
+.breakdown-row:last-child { border-bottom: none; }
+.breakdown-row .lbl { color: var(--color-text-secondary); }
+.breakdown-row .amt { font-weight: 500; color: var(--color-text-primary); }
+.breakdown-row .amt.coral { color: #FF8A6B; }
+.breakdown-row .amt.green { color: #0F6E56; }
+
+.net-row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0 0; font-size: 15px; border-top: 1px solid var(--color-border-secondary); margin-top: 6px; }
+.net-row .lbl { font-weight: 500; color: var(--color-text-primary); }
+.net-row .amt { font-family: 'Aleo', serif; font-size: 20px; font-weight: 700; color: #0F6E56; }
+
+.disclaimer { font-size: 11px; color: var(--color-text-tertiary); line-height: 1.6; margin-top: 1.5rem; }
+
+.cta-block { background: #1B2A4E; border-radius: var(--border-radius-lg); padding: 1.5rem; margin-top: 1.75rem; text-align: center; }
+.cta-block p { font-size: 13px; color: #FFE4BE; line-height: 1.6; margin-bottom: 1rem; }
+.cta-block a {
+  display: inline-block;
+  padding: 10px 24px;
+  background: #FF8A6B;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--border-radius-md);
+  text-decoration: none;
+}
+</style>
+
+<div class="est-wrap">
+
+  <div class="est-header">
+    <h1>The Operational Inefficiency Estimator</h1>
+    <p>Four inputs. Five minutes. A clearer picture of what operational fragmentation may be costing your organization right now.</p>
+  </div>
+
+  <hr class="est-divider">
+
+  <div class="est-context">
+    Non-profit healthcare organizations operating with misaligned teams, unclear workflows, and reactive decision-making often absorb costs that never appear on a single line item. This estimator uses published benchmarks and standard HR data to surface what that friction may look like in your organization.
+  </div>
+
+  <div class="est-section-label">About your organization</div>
+  <div class="input-grid">
+    <div class="input-group">
+      <label for="headcount">Total staff (FTEs)</label>
+      <input type="number" id="headcount" min="5" max="500" value="40" step="1">
+      <span class="input-hint">Full-time equivalents across all sites</span>
+    </div>
+    <div class="input-group">
+      <label for="avg-salary">Average annual salary ($)</label>
+      <input type="number" id="avg-salary" min="30000" max="150000" value="52000" step="1000">
+      <span class="input-hint">Across all roles</span>
+    </div>
+    <div class="input-group">
+      <label for="mgr-count">Managers and directors (#)</label>
+      <input type="number" id="mgr-count" min="1" max="50" value="6" step="1">
+      <span class="input-hint">Leaders with direct reports</span>
+    </div>
+    <div class="input-group">
+      <label for="mgr-salary">Average manager salary ($)</label>
+      <input type="number" id="mgr-salary" min="45000" max="200000" value="78000" step="1000">
+      <span class="input-hint">Directors, supervisors, team leads</span>
+    </div>
+  </div>
+
+  <div class="est-section-label">Operational friction signals</div>
+
+  <div class="slider-group">
+    <label>Time managers spend on reactive problem-solving vs. strategic work</label>
+    <div class="slider-row">
+      <input type="range" id="firefight-pct" min="10" max="70" value="35" step="5">
+      <span class="slider-val" id="firefight-out">35%</span>
+    </div>
+    <span class="input-hint">Research suggests 25–40% is typical in fragmented operations</span>
+  </div>
+
+  <div class="slider-group">
+    <label>Staff turnover rate (annual %)</label>
+    <div class="slider-row">
+      <input type="range" id="turnover-pct" min="5" max="50" value="22" step="1">
+      <span class="slider-val" id="turnover-out">22%</span>
+    </div>
+    <span class="input-hint">Non-profit healthcare average: 20–28%</span>
+  </div>
+
+  <div class="slider-group">
+    <label>Staff time lost to unclear processes, rework, or miscommunication</label>
+    <div class="slider-row">
+      <input type="range" id="waste-pct" min="5" max="40" value="15" step="1">
+      <span class="slider-val" id="waste-out">15%</span>
+    </div>
+    <span class="input-hint">Industry estimates: 10–25% in organizations without documented workflows</span>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">Calculate my organization's cost of inefficiency</button>
+
+  <div class="results-wrap" id="results">
+    <hr class="est-divider">
+    <div class="results-headline">Your estimated annual cost of operational friction</div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Total annual cost of inefficiency</div>
+        <div class="metric-value coral" id="r-total-cost">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Estimated turnover cost per year</div>
+        <div class="metric-value coral" id="r-turnover-cost">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Estimated savings — year one of transformation</div>
+        <div class="metric-value green" id="r-yr1-savings">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Net value after FlowState investment</div>
+        <div class="metric-value blue" id="r-net-value">—</div>
+      </div>
+    </div>
+
+    <div class="breakdown-card">
+      <div class="breakdown-title">Cost breakdown — where the friction is</div>
+      <div class="breakdown-row"><span class="lbl">Leadership time spent reactive (annual cost)</span><span class="amt coral" id="b-firefight">—</span></div>
+      <div class="breakdown-row"><span class="lbl">Staff time lost to process gaps and rework</span><span class="amt coral" id="b-waste">—</span></div>
+      <div class="breakdown-row"><span class="lbl">Turnover — replacement cost</span><span class="amt coral" id="b-turnover">—</span></div>
+    </div>
+
+    <div class="breakdown-card">
+      <div class="breakdown-title">Hiring alternative — what additional FTEs would cost</div>
+      <div class="breakdown-row"><span class="lbl">Equivalent capacity gain via 1 new FTE</span><span class="amt" id="b-hire1">—</span></div>
+      <div class="breakdown-row"><span class="lbl">Equivalent capacity gain via 2 new FTEs</span><span class="amt" id="b-hire2">—</span></div>
+      <div class="breakdown-row"><span class="lbl">Estimated 5-year cost of 2 FTEs (salary + benefits)</span><span class="amt coral" id="b-hire2-5yr">—</span></div>
+      <div class="breakdown-row"><span class="lbl">5-year estimated savings from transformation instead</span><span class="amt green" id="b-transform-5yr">—</span></div>
+      <div class="net-row"><span class="lbl">5-year net advantage of structured transformation</span><span class="amt" id="b-net-advantage">—</span></div>
+    </div>
+
+    <p class="disclaimer">Estimates are based on publicly available benchmarks: SHRM replacement cost data (50–200% of annual salary depending on role), Gallup research on manager time allocation, and McKinsey estimates on process friction. All figures are illustrative and intended to prompt conversation, not replace a diagnostic. Your actual numbers may be higher or lower depending on program complexity, geography, and mission model.</p>
+
+    <div class="cta-block">
+      <p>These numbers are a starting point, not a conclusion. A FlowFind diagnostic surfaces what's actually happening in your organization so you can make decisions with confidence, not estimates.</p>
+      <a href="#">Schedule a discovery conversation</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.getElementById('firefight-pct').addEventListener('input', function() {
+  document.getElementById('firefight-out').textContent = this.value + '%';
+});
+document.getElementById('turnover-pct').addEventListener('input', function() {
+  document.getElementById('turnover-out').textContent = this.value + '%';
+});
+document.getElementById('waste-pct').addEventListener('input', function() {
+  document.getElementById('waste-out').textContent = this.value + '%';
+});
+
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString();
+}
+
+function calculate() {
+  var headcount = parseFloat(document.getElementById('headcount').value) || 40;
+  var avgSalary = parseFloat(document.getElementById('avg-salary').value) || 52000;
+  var mgrCount = parseFloat(document.getElementById('mgr-count').value) || 6;
+  var mgrSalary = parseFloat(document.getElementById('mgr-salary').value) || 78000;
+  var firefightPct = parseFloat(document.getElementById('firefight-pct').value) / 100;
+  var turnoverPct = parseFloat(document.getElementById('turnover-pct').value) / 100;
+  var wastePct = parseFloat(document.getElementById('waste-pct').value) / 100;
+
+  var firefightCost = mgrCount * mgrSalary * firefightPct;
+  var wasteCost = headcount * avgSalary * wastePct;
+  var turnoversPerYear = Math.round(headcount * turnoverPct);
+  var replacementRate = 0.75;
+  var turnoverCost = turnoversPerYear * avgSalary * replacementRate;
+  var totalCost = firefightCost + wasteCost + turnoverCost;
+
+  var yr1SavingsPct = 0.35;
+  var yr1Savings = totalCost * yr1SavingsPct;
+  var flowstateCost = 50000;
+  var netValue = yr1Savings - flowstateCost;
+
+  var hire1Cost = avgSalary * 1.3;
+  var hire2Cost = avgSalary * 2 * 1.3;
+  var hire2fiveYr = hire2Cost * 5;
+  var transform5yr = yr1Savings * 4.5;
+  var netAdvantage = transform5yr - (hire2fiveYr + flowstateCost);
+
+  document.getElementById('r-total-cost').textContent = fmt(totalCost);
+  document.getElementById('r-turnover-cost').textContent = fmt(turnoverCost);
+  document.getElementById('r-yr1-savings').textContent = fmt(yr1Savings);
+  document.getElementById('r-net-value').textContent = netValue >= 0 ? fmt(netValue) : '-' + fmt(Math.abs(netValue));
+
+  document.getElementById('b-firefight').textContent = fmt(firefightCost);
+  document.getElementById('b-waste').textContent = fmt(wasteCost);
+  document.getElementById('b-turnover').textContent = fmt(turnoverCost);
+
+  document.getElementById('b-hire1').textContent = fmt(hire1Cost) + '/year';
+  document.getElementById('b-hire2').textContent = fmt(hire2Cost) + '/year';
+  document.getElementById('b-hire2-5yr').textContent = fmt(hire2fiveYr);
+  document.getElementById('b-transform-5yr').textContent = fmt(transform5yr);
+  document.getElementById('b-net-advantage').textContent = netAdvantage >= 0 ? fmt(netAdvantage) : '-' + fmt(Math.abs(netAdvantage));
+
+  document.getElementById('results').classList.add('visible');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
