@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1B2A4E">
+<title>The FlowForward Assessment | FlowForward Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B2A4E;
+    --navy-soft: #2A3D6B;
+    --cornflower: #6B8DD6;
+    --cornflower-soft: #A3B8E3;
+    --coral: #FF8A6B;
+    --coral-soft: #FFB59E;
+    --peach: #FFBB99;
+    --cream: #FFE4BE;
+    --white: #FFFFFF;
+    --paper: #FBF9F5;
+    --ink: #1B2A4E;
+    --ink-soft: #5A6680;
+    --ink-faint: #9BA3B5;
+    --line: #E5E8F0;
+    --shadow: 0 1px 3px rgba(27, 42, 78, 0.06), 0 4px 16px rgba(27, 42, 78, 0.06);
+    --shadow-hover: 0 2px 6px rgba(27, 42, 78, 0.1), 0 8px 24px rgba(27, 42, 78, 0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior: none;
+  }
+
+  /* Typography */
+  h1, h2, h3 { font-family: 'Aleo', Georgia, serif; font-weight: 700; line-height: 1.2; color: var(--navy); }
+  h1 { font-size: 2rem; letter-spacing: -0.01em; }
+  h2 { font-size: 1.5rem; letter-spacing: -0.005em; }
+  h3 { font-size: 1.15rem; }
+  p { margin-bottom: 1em; }
+  p:last-child { margin-bottom: 0; }
+  em { font-family: 'Aleo', Georgia, serif; font-style: italic; font-weight: 400; }
+  strong { font-weight: 600; }
+
+  /* App shell */
+  .app {
+    max-width: 540px;
+    margin: 0 auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    position: relative;
+  }
+
+  /* Header with progress */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 20px 10px;
+  }
+  .brand-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .brand-name {
+    font-family: 'Aleo', Georgia, serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--coral);
+    letter-spacing: 0.02em;
+  }
+  .brand-sub {
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .progress-track {
+    height: 4px;
+    background: var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--cornflower), var(--coral));
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    width: 0%;
+  }
+  .progress-label {
+    margin-top: 6px;
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Main content area */
+  .content {
+    flex: 1;
+    padding: 28px 20px 32px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Screen system */
+  .screen { display: none; animation: fadeIn 0.4s cubic-bezier(0.22, 0.61, 0.36, 1); }
+  .screen.active { display: flex; flex-direction: column; flex: 1; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Welcome screen */
+  .welcome-logo {
+    margin: 12px auto 24px;
+    width: 64px;
+    height: 64px;
+    background: var(--navy);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+  }
+  .welcome-logo-mark {
+    font-family: 'Aleo', Georgia, serif;
+    font-weight: 700;
+    color: var(--coral);
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+  }
+  .welcome-eyebrow {
+    text-align: center;
+    color: var(--cornflower);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .welcome-title {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .welcome-subtitle {
+    text-align: center;
+    font-family: 'Aleo', Georgia, serif;
+    font-style: italic;
+    color: var(--cornflower);
+    font-size: 1.05rem;
+    margin-bottom: 28px;
+    line-height: 1.4;
+  }
+  .welcome-body {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .welcome-meta {
+    margin: 28px 0 8px;
+    padding: 18px 18px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+  .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 0;
+  }
+  .meta-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--coral);
+    font-weight: 700;
+    font-size: 0.85rem;
+    font-family: 'Aleo', Georgia, serif;
+  }
+  .meta-text {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .meta-text strong { color: var(--ink); font-weight: 600; }
+
+  /* Section intro screen */
+  .section-intro {
+    text-align: center;
+    padding-top: 12px;
+  }
+  .section-number {
+    font-family: 'Aleo', Georgia, serif;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--coral);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+  .section-progress {
+    color: var(--ink-faint);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .section-title {
+    margin-bottom: 16px;
+  }
+  .section-description {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    max-width: 28em;
+    margin: 0 auto;
+  }
+  .section-time {
+    margin-top: 24px;
+    padding: 10px 16px;
+    display: inline-block;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    align-self: center;
+  }
+
+  /* Question screen */
+  .question-eyebrow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .question-eyebrow-section { color: var(--cornflower); }
+  .question-eyebrow-count { color: var(--ink-faint); }
+  .question-text {
+    font-family: 'Aleo', Georgia, serif;
+    font-weight: 400;
+    font-size: 1.32rem;
+    line-height: 1.35;
+    color: var(--navy);
+    margin-bottom: 28px;
+    letter-spacing: -0.005em;
+  }
+
+  /* Answer options */
+  .answers { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+  .answer-btn {
+    width: 100%;
+    padding: 16px 18px;
+    background: var(--white);
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 56px;
+    line-height: 1.35;
+  }
+  .answer-btn:hover { border-color: var(--cornflower); transform: translateY(-1px); box-shadow: var(--shadow); }
+  .answer-btn:active { transform: translateY(0); }
+  .answer-btn.selected {
+    border-color: var(--coral);
+    background: linear-gradient(135deg, rgba(255, 138, 107, 0.06), rgba(107, 141, 214, 0.04));
+    box-shadow: 0 0 0 3px rgba(255, 138, 107, 0.12);
+  }
+  .answer-num {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Aleo', Georgia, serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    transition: all 0.2s;
+  }
+  .answer-btn.selected .answer-num {
+    background: var(--coral);
+    border-color: var(--coral);
+    color: var(--white);
+  }
+  .answer-label { flex: 1; }
+
+  /* Navigation */
+  .nav {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 24px;
+  }
+  .btn {
+    flex: 1;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+    min-height: 52px;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary {
+    background: var(--navy);
+    color: var(--white);
+    box-shadow: var(--shadow);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--navy-soft);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
+  }
+  .btn-primary:active:not(:disabled) { transform: translateY(0); }
+  .btn-primary:disabled { background: var(--ink-faint); cursor: not-allowed; opacity: 0.6; box-shadow: none; }
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1.5px solid var(--line);
+    flex: 0 0 auto;
+    min-width: 80px;
+  }
+  .btn-secondary:hover { border-color: var(--cornflower); color: var(--cornflower); }
+  .btn-full { flex: 1; }
+
+  /* Optin screen */
+  .optin-icon {
+    margin: 8px auto 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--coral) 0%, var(--peach) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.4rem;
+    font-family: 'Aleo', Georgia, serif;
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(255, 138, 107, 0.3);
+  }
+  .form-group { margin-bottom: 14px; }
+  .form-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .form-input {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--white);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    transition: all 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--cornflower);
+    box-shadow: 0 0 0 3px rgba(107, 141, 214, 0.12);
+  }
+  .form-optional {
+    color: var(--ink-faint);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .privacy-note {
+    margin-top: 16px;
+    padding: 12px 14px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    font-family: 'Aleo', Georgia, serif;
+  }
+
+  /* Results screen */
+  .results-eyebrow {
+    text-align: center;
+    color: var(--cornflower);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .results-greeting {
+    text-align: center;
+    font-family: 'Aleo', Georgia, serif;
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+  }
+  .score-card {
+    padding: 24px 20px;
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .score-card::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(255, 138, 107, 0.18), transparent 70%);
+    border-radius: 50%;
+  }
+  .score-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cornflower-soft);
+    margin-bottom: 6px;
+    position: relative;
+  }
+  .score-number {
+    font-family: 'Aleo', Georgia, serif;
+    font-weight: 700;
+    font-size: 3.4rem;
+    line-height: 1;
+    color: var(--coral);
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+    position: relative;
+  }
+  .score-max {
+    font-size: 0.85rem;
+    color: var(--cornflower-soft);
+    font-weight: 500;
+    position: relative;
+  }
+  .tier-card {
+    padding: 22px 20px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    margin-bottom: 16px;
+  }
+  .tier-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--cornflower);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .tier-name {
+    font-family: 'Aleo', Georgia, serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--navy);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .tier-description {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+  }
+
+  /* Section breakdown */
+  .sections-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .sections-title {
+    font-family: 'Aleo', Georgia, serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--navy);
+    margin-bottom: 14px;
+  }
+  .section-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-row:last-child { border-bottom: none; }
+  .section-row-name {
+    flex: 1;
+    font-size: 0.88rem;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .section-row-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-left: 8px;
+  }
+  .section-row-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .section-row-score {
+    font-family: 'Aleo', Georgia, serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--navy);
+    min-width: 42px;
+    text-align: right;
+  }
+  .lowest-flag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--coral);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-left: 6px;
+  }
+
+  /* Pattern card */
+  .pattern-card {
+    background: linear-gradient(135deg, var(--cream) 0%, rgba(255, 228, 190, 0.3) 100%);
+    border: 1px solid var(--peach);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .pattern-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--coral);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .pattern-title {
+    font-family: 'Aleo', Georgia, serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .pattern-body {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+  }
+
+  /* CTA card */
+  .cta-card {
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 16px;
+    padding: 22px 20px;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .cta-title {
+    font-family: 'Aleo', Georgia, serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .cta-body {
+    color: var(--cornflower-soft);
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .cta-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--coral);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition: all 0.2s;
+  }
+  .cta-button:hover { background: var(--coral-soft); transform: translateY(-1px); }
+
+  /* Footer link */
+  .footer-note {
+    text-align: center;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-faint);
+    font-size: 0.78rem;
+    font-family: 'Aleo', Georgia, serif;
+    font-style: italic;
+  }
+
+  /* Mobile fine tuning */
+  @media (max-width: 380px) {
+    .question-text { font-size: 1.2rem; }
+    h1 { font-size: 1.75rem; }
+    .score-number { font-size: 3rem; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar" id="topbar">
+    <div class="brand-row">
+      <div class="brand-name">FlowForward</div>
+      <div class="brand-sub" id="phase-label">Self-Assessment</div>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="progress-label">
+      <span id="progress-text">Ready to begin</span>
+      <span id="progress-percent">0%</span>
+    </div>
+  </header>
+
+  <main class="content" id="content">
+    <!-- Screens injected by JS -->
+  </main>
+</div>
+
+<script>
+// ==========================================
+// ASSESSMENT DATA
+// ==========================================
+const SECTIONS = [
+  {
+    name: "Leadership Alignment",
+    description: "Whether leadership shares a single definition of operational priorities and whether decisions are made on cadence rather than in reaction. Misalignment at the top is the most common root cause of operational friction further down.",
+    questions: [
+      "Our leadership team can articulate the top three operational priorities for the next 12 months in the same language.",
+      "Strategic decisions get made on a predictable cadence, not in response to whatever surfaced loudest that week.",
+      "When two leaders are working on overlapping operational concerns, they know which one owns the final decision.",
+      "Our leadership team meets often enough to make timely decisions, and the meetings produce decisions rather than discussion summaries.",
+      "If you asked any leadership team member what success looks like at the end of this fiscal year, the answers would be substantially aligned.",
+      "Board-level concerns and leadership operational priorities are connected, not running in parallel."
+    ]
+  },
+  {
+    name: "Decision-Making Infrastructure",
+    description: "Whether the organization has the structures, data, and ownership clarity to make decisions without delay. Decision latency is one of the most expensive forms of operational drag, and it rarely shows up as a line item.",
+    questions: [
+      "Operational decisions have clear owners. People know who decides what without needing to ask.",
+      "Leaders have the data they need to make decisions at the time they need to make them.",
+      "We have a defined process for escalating issues that span multiple departments, and the process is used.",
+      "Decisions, once made, are documented somewhere the team can reference later. We do not re-litigate the same operational questions repeatedly.",
+      "Our key operational KPIs are tracked consistently, reviewed on cadence, and influence actual decisions.",
+      "When a decision turns out to be wrong, we have a way to revisit it that does not require a crisis."
+    ]
+  },
+  {
+    name: "Cross-Functional Coordination",
+    description: "How departments and teams share information, hand off work, and operate as a connected organization rather than a set of well-run silos. This dimension shows up most clearly when growth, change, or pressure exposes the gaps between teams.",
+    questions: [
+      "Our departments understand how their work affects other departments, and they coordinate accordingly.",
+      "Handoffs between departments (clinical to billing, intake to scheduling, etc.) are documented and consistently followed.",
+      "When something falls through the cracks between teams, we know how it happened and have a way to prevent the same gap recurring.",
+      "Cross-functional initiatives have named ownership and a single accountable leader, not shared ownership across multiple managers.",
+      "Information flows between leadership and the front lines in both directions. Front-line staff understand strategic priorities, and leadership hears operational reality.",
+      "Cross-functional conflict, when it happens, gets surfaced and resolved rather than absorbed into ongoing friction."
+    ]
+  },
+  {
+    name: "Workforce Sustainability",
+    description: "Whether the organization is operating in a way that protects, develops, and retains the people doing the work. This dimension is downstream of the others. If the first three sections score low, workforce sustainability is often where the cost shows up first.",
+    questions: [
+      "Staff turnover is at or below the level you would expect for a healthy non-profit healthcare organization. Exit conversations name reasons you can address, not chronic operational dysfunction.",
+      "New hires reach productivity within the timeline you have set, and the timeline is realistic for the role.",
+      "Workload is distributed in a way that does not depend on a few key people staying late or holding institutional knowledge in their heads.",
+      "Leadership is aware of where burnout is concentrated and has visible ways of addressing it, not just acknowledging it.",
+      "Cross-training exists for critical roles. The departure of any one person is a challenge, not a crisis.",
+      "Employees can articulate how their work connects to the mission, and they experience that connection as energizing rather than draining."
+    ]
+  },
+  {
+    name: "Systems and Workflows",
+    description: "Whether the operational infrastructure (workflows, platforms, documentation, processes) supports the organization or creates additional drag. This dimension is where failed system transitions and platform proliferation tend to show up most visibly.",
+    questions: [
+      "Our critical workflows are documented in a way that someone new could follow, not stored only in the heads of long-tenured staff.",
+      "Our operational platforms (EMR, billing, scheduling, communication) work together rather than against each other.",
+      "Team members know which platform is authoritative for which kind of information. We do not have multiple systems claiming to be the source of truth for the same data.",
+      "When we have implemented new systems in the past, the implementations stuck. We did not roll back, abandon, or work around the new system.",
+      "We have a clear process for evaluating new tools or platforms before adopting them, and the process protects against shiny-object decisions.",
+      "Our policies and procedures are reviewed on cadence, updated when needed, and actually followed in daily work."
+    ]
+  },
+  {
+    name: "Mission-Operations Alignment",
+    description: "Whether operational decisions visibly serve the mission and whether the people inside the organization can feel that connection. This dimension is often treated as soft, but it is one of the strongest predictors of long-term operational health in non-profit healthcare.",
+    questions: [
+      "Our operational metrics are paired with mission-impact metrics. We track both how efficiently we operate and what difference we are making.",
+      "When operational decisions create tension with mission priorities, leadership names the tension openly and resolves it visibly.",
+      "Patients, families, and community partners experience the difference our operational improvements make. The work is not just internal.",
+      "Staff members across the organization can name how their daily work serves the mission, not just their job description.",
+      "Our budget reflects our stated priorities. Where we spend matches what we say matters.",
+      "When we describe what makes our organization different, we describe something real about how we operate, not just what we believe."
+    ]
+  }
+];
+
+const ANSWER_LABELS = [
+  "Rarely true of our organization",
+  "True in only a few areas",
+  "True in some areas and not in others",
+  "True in most areas",
+  "Consistently true"
+];
+
+const TIER_CONTENT = {
+  reactive: {
+    name: "Reactive Operations",
+    range: "36 to 84",
+    summary: "Your organization is likely operating in cycles of effort and adjustment. Decisions get made under pressure rather than on cadence. Cross-functional work falls into gaps between teams. The people doing the work are carrying the operational load that systems should be absorbing.",
+    detail: "This pattern is common in non-profit healthcare organizations growing faster than their operational design can support, or in organizations operating under chronic funding pressure that has gone on long enough to feel normal. The good news is that organizations at this tier often see meaningful operational change in 6 to 12 months once the foundational work begins.",
+    ctaTitle: "Where to start from here",
+    ctaBody: "If you would value talking through your results in more depth, a complimentary 30-minute conversation is available. We could focus on your two lowest sections and what the patterns suggest about where to look first."
+  },
+  stabilizing: {
+    name: "Stabilizing Operations",
+    range: "85 to 132",
+    summary: "Your organization has built real operational infrastructure but the gains are uneven across sections. Some areas function well; others have grown reactively or are showing strain as the organization grows or changes.",
+    detail: "Most non-profit healthcare organizations land in this tier, and the work of moving from stabilizing to integrated operations is often more strategic than foundational. Your section pattern matters more at this tier than your composite score. If three sections sit high and one sits low, that single low section is often what is creating outsized friction across the organization.",
+    ctaTitle: "Where to start from here",
+    ctaBody: "If you would value talking through your results, a complimentary 30-minute conversation is available. We could look at your section pattern together and discuss where the highest-value early work could likely sit."
+  },
+  integrated: {
+    name: "Operationally Integrated",
+    range: "133 to 180",
+    summary: "Your organization runs on operational systems that absorb load rather than transferring it to people. Leadership is aligned, decisions move on cadence, cross-functional work has clear ownership, and the mission-operations connection is visible. This is the rarest tier, and it does not happen by accident.",
+    detail: "The work at this tier is usually about protecting what is already working as the organization grows or changes. Operational entropy is the default. Even well-designed systems erode over time without intentional maintenance. The most useful question for Integrated-tier organizations is not where to fix things but where the early signals of drift could show up first.",
+    ctaTitle: "A peer conversation, if useful",
+    ctaBody: "If you would value a conversation about where the early signals of drift could show up in your organization, I am glad to have one. The conversation would be a peer one, not a sales one."
+  }
+};
+
+const PATTERN_INSIGHTS = {
+  0: { // Leadership Alignment
+    title: "If Leadership Alignment is your lowest section",
+    body: "Address it first, before anything else. Gains in other sections tend to be unstable when leadership alignment is weak, because operational structures depend on consistent strategic direction. Leadership alignment work also tends to be the fastest dimension to move once it has focused attention."
+  },
+  1: { // Decision-Making
+    title: "If Decision-Making Infrastructure is your lowest",
+    body: "This is where the largest invisible cost often sits. Decision drag compounds quietly. The cost shows up as workforce strain six to twelve months later, not as a line item. Building decision-making infrastructure is often where the fastest visible change happens, because it accelerates everything else."
+  },
+  2: { // Cross-Functional
+    title: "If Cross-Functional Coordination is your lowest",
+    body: "This is often a sign that the organization has grown faster than its coordination structures. Each department may be running well in isolation while the gaps between them are absorbing meaningful work. The fix is structural, not interpersonal."
+  },
+  3: { // Workforce
+    title: "If Workforce Sustainability is your lowest",
+    body: "Workforce strain is downstream of operational design. The fastest improvements in retention and team energy often come from upstream sections (decisions, coordination, systems) rather than direct workforce interventions like compensation studies or culture initiatives."
+  },
+  4: { // Systems
+    title: "If Systems and Workflows is your lowest",
+    body: "There is often a buried story about a past system implementation that did not stick, or about platform proliferation that has accumulated over years. The work is usually not another platform; it is the underlying decision-making and documentation infrastructure that should have been built around the platforms."
+  },
+  5: { // Mission
+    title: "If Mission-Operations Alignment is your lowest",
+    body: "Mission and operations may be running on parallel tracks rather than reinforcing each other. Over time this pattern can erode both staff connection and external credibility. The work of making the connection visible is often less effort than it sounds, because the mission is already there."
+  }
+};
+
+// ==========================================
+// STATE
+// ==========================================
+const state = {
+  currentScreen: 'welcome', // welcome, intro, question, optin, results
+  currentSection: 0,
+  currentQuestion: 0,
+  answers: Array(36).fill(null), // 0-35 indices, each null or 1-5
+  user: { firstName: '', email: '', orgName: '', role: '' },
+  totalQuestions: 36
+};
+
+// ==========================================
+// HELPERS
+// ==========================================
+function getAnswerIndex(sectionIdx, questionIdx) {
+  return sectionIdx * 6 + questionIdx;
+}
+
+function getSectionScore(sectionIdx) {
+  let total = 0;
+  for (let i = 0; i < 6; i++) {
+    const ans = state.answers[getAnswerIndex(sectionIdx, i)];
+    if (ans !== null) total += ans;
+  }
+  return total;
+}
+
+function getCompositeScore() {
+  return state.answers.reduce((sum, val) => sum + (val || 0), 0);
+}
+
+function getTier(composite) {
+  if (composite <= 84) return 'reactive';
+  if (composite <= 132) return 'stabilizing';
+  return 'integrated';
+}
+
+function getLowestSection() {
+  let lowest = 0;
+  let lowestScore = getSectionScore(0);
+  for (let i = 1; i < 6; i++) {
+    const s = getSectionScore(i);
+    if (s < lowestScore) { lowestScore = s; lowest = i; }
+  }
+  return lowest;
+}
+
+function getTotalAnswered() {
+  return state.answers.filter(a => a !== null).length;
+}
+
+function updateProgress() {
+  const progressFill = document.getElementById('progress-fill');
+  const progressText = document.getElementById('progress-text');
+  const progressPercent = document.getElementById('progress-percent');
+  const phaseLabel = document.getElementById('phase-label');
+
+  let percent = 0;
+  let text = 'Ready to begin';
+
+  if (state.currentScreen === 'welcome') {
+    percent = 0;
+    text = 'Ready to begin';
+    phaseLabel.textContent = 'Self-Assessment';
+  } else if (state.currentScreen === 'intro' || state.currentScreen === 'question') {
+    const answered = getTotalAnswered();
+    percent = Math.round((answered / 36) * 100);
+    text = `Question ${Math.min(answered + 1, 36)} of 36`;
+    phaseLabel.textContent = `Section ${state.currentSection + 1} of 6`;
+  } else if (state.currentScreen === 'optin') {
+    percent = 100;
+    text = 'Last step';
+    phaseLabel.textContent = 'Almost there';
+  } else if (state.currentScreen === 'results') {
+    percent = 100;
+    text = 'Complete';
+    phaseLabel.textContent = 'Your Results';
+  }
+
+  progressFill.style.width = percent + '%';
+  progressText.textContent = text;
+  progressPercent.textContent = percent + '%';
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ==========================================
+// SCREENS
+// ==========================================
+function renderWelcome() {
+  const content = document.getElementById('content');
+  content.innerHTML = `
+    <div class="screen active">
+      <div class="welcome-logo">
+        <div class="welcome-logo-mark">F</div>
+      </div>
+      <div class="welcome-eyebrow">FlowForward Consulting</div>
+      <h1 class="welcome-title">The FlowForward Assessment</h1>
+      <div class="welcome-subtitle">A diagnostic for non-profit healthcare operations leaders</div>
+      <div class="welcome-body">
+        <p>Most non-profit healthcare organizations know something is operationally off long before they can name what it is. Decisions feel reactive. Teams feel overwhelmed. Growth seems to be exposing cracks that were not there a year ago.</p>
+        <p>This assessment gives operations leaders the language for those patterns, along with a directional read on where their organization sits today.</p>
+      </div>
+      <div class="welcome-meta">
+        <div class="meta-row">
+          <div class="meta-icon">36</div>
+          <div class="meta-text"><strong>36 questions</strong> across six dimensions of operational readiness</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-icon">20</div>
+          <div class="meta-text"><strong>15–20 minutes</strong> to complete honestly</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-icon">F</div>
+          <div class="meta-text"><strong>Free</strong>, and the results are yours to keep</div>
+        </div>
+      </div>
+      <div class="nav">
+        <button class="btn btn-primary btn-full" onclick="startAssessment()">Begin the assessment</button>
+      </div>
+    </div>
+  `;
+  updateProgress();
+}
+
+function renderSectionIntro() {
+  const section = SECTIONS[state.currentSection];
+  const content = document.getElementById('content');
+  const sectionNum = ['One', 'Two', 'Three', 'Four', 'Five', 'Six'][state.currentSection];
+
+  content.innerHTML = `
+    <div class="screen active">
+      <div class="section-intro">
+        <div class="section-number">Section ${sectionNum}</div>
+        <div class="section-progress">${state.currentSection + 1} of 6</div>
+        <h2 class="section-title">${section.name}</h2>
+        <p class="section-description">${section.description}</p>
+        <div class="section-time">Six questions · About 3 minutes</div>
+      </div>
+      <div class="nav">
+        <button class="btn btn-primary btn-full" onclick="startSection()">Begin section</button>
+      </div>
+    </div>
+  `;
+  updateProgress();
+  scrollToTop();
+}
+
+function renderQuestion() {
+  const section = SECTIONS[state.currentSection];
+  const question = section.questions[state.currentQuestion];
+  const globalQ = getAnswerIndex(state.currentSection, state.currentQuestion);
+  const currentAnswer = state.answers[globalQ];
+  const isLastInSection = state.currentQuestion === 5;
+  const isLastOverall = state.currentSection === 5 && state.currentQuestion === 5;
+  const isFirst = state.currentSection === 0 && state.currentQuestion === 0;
+
+  const content = document.getElementById('content');
+  content.innerHTML = `
+    <div class="screen active">
+      <div class="question-eyebrow">
+        <span class="question-eyebrow-section">${section.name}</span>
+        <span class="question-eyebrow-count">${state.currentQuestion + 1} of 6</span>
+      </div>
+      <div class="question-text">${question}</div>
+      <div class="answers">
+        ${[1,2,3,4,5].map(n => `
+          <button class="answer-btn ${currentAnswer === n ? 'selected' : ''}" onclick="selectAnswer(${n})" data-value="${n}">
+            <div class="answer-num">${n}</div>
+            <div class="answer-label">${ANSWER_LABELS[n-1]}</div>
+          </button>
+        `).join('')}
+      </div>
+      <div class="nav">
+        ${!isFirst ? '<button class="btn btn-secondary" onclick="prevQuestion()">Back</button>' : ''}
+        <button class="btn btn-primary btn-full" id="next-btn" ${currentAnswer === null ? 'disabled' : ''} onclick="nextQuestion()">
+          ${isLastOverall ? 'See your results' : (isLastInSection ? 'Next section' : 'Continue')}
+        </button>
+      </div>
+    </div>
+  `;
+  updateProgress();
+  scrollToTop();
+}
+
+function renderOptin() {
+  const content = document.getElementById('content');
+  content.innerHTML = `
+    <div class="screen active">
+      <div class="optin-icon">✓</div>
+      <h2 style="text-align: center; margin-bottom: 8px;">You finished the assessment.</h2>
+      <p style="text-align: center; color: var(--ink-soft); margin-bottom: 24px; font-family: 'Aleo', Georgia, serif; font-style: italic;">Where should your results go?</p>
+      <div class="form-group">
+        <label class="form-label">First name</label>
+        <input type="text" class="form-input" id="firstName" value="${state.user.firstName}" autocomplete="given-name" placeholder="Your first name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" id="email" value="${state.user.email}" autocomplete="email" inputmode="email" placeholder="you@organization.org">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Organization <span class="form-optional">(optional)</span></label>
+        <input type="text" class="form-input" id="orgName" value="${state.user.orgName}" autocomplete="organization" placeholder="Organization name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Role <span class="form-optional">(optional)</span></label>
+        <input type="text" class="form-input" id="role" value="${state.user.role}" autocomplete="organization-title" placeholder="Operations Director, COO, etc.">
+      </div>
+      <div class="privacy-note">
+        Your email is used to deliver your results and stays with FlowForward. No selling, no sharing, no daily marketing emails.
+      </div>
+      <div class="nav">
+        <button class="btn btn-secondary" onclick="prevFromOptin()">Back</button>
+        <button class="btn btn-primary btn-full" onclick="submitOptin()">Show my results</button>
+      </div>
+    </div>
+  `;
+  updateProgress();
+  scrollToTop();
+}
+
+function renderResults() {
+  const composite = getCompositeScore();
+  const tier = getTier(composite);
+  const tierData = TIER_CONTENT[tier];
+  const lowestIdx = getLowestSection();
+  const pattern = PATTERN_INSIGHTS[lowestIdx];
+  const firstName = state.user.firstName || 'there';
+
+  // Determine bar fill color per section based on score
+  const getBarColor = (score) => {
+    if (score <= 14) return 'var(--coral)';
+    if (score <= 22) return 'var(--cornflower)';
+    return 'var(--navy)';
+  };
+
+  const sectionsHtml = SECTIONS.map((section, idx) => {
+    const score = getSectionScore(idx);
+    const percent = (score / 30) * 100;
+    const isLowest = idx === lowestIdx;
+    return `
+      <div class="section-row">
+        <div class="section-row-name">${section.name}${isLowest ? '<span class="lowest-flag">Lowest</span>' : ''}</div>
+        <div class="section-row-bar">
+          <div class="section-row-fill" style="width: ${percent}%; background: ${getBarColor(score)};"></div>
+        </div>
+        <div class="section-row-score">${score}/30</div>
+      </div>
+    `;
+  }).join('');
+
+  const content = document.getElementById('content');
+  content.innerHTML = `
+    <div class="screen active">
+      <div class="results-eyebrow">Your Results</div>
+      <div class="results-greeting">Thank you, ${firstName}, for doing this honestly.</div>
+
+      <div class="score-card">
+        <div class="score-label">Composite Score</div>
+        <div class="score-number">${composite}</div>
+        <div class="score-max">out of 180</div>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-eyebrow">Your tier · ${tierData.range}</div>
+        <div class="tier-name">${tierData.name}</div>
+        <p class="tier-description">${tierData.summary}</p>
+        <p class="tier-description" style="margin-bottom: 0;">${tierData.detail}</p>
+      </div>
+
+      <div class="sections-card">
+        <div class="sections-title">Your section breakdown</div>
+        ${sectionsHtml}
+      </div>
+
+      <div class="pattern-card">
+        <div class="pattern-eyebrow">Pattern insight</div>
+        <div class="pattern-title">${pattern.title}</div>
+        <p class="pattern-body">${pattern.body}</p>
+      </div>
+
+      <div class="cta-card">
+        <div class="cta-title">${tierData.ctaTitle}</div>
+        <div class="cta-body">${tierData.ctaBody}</div>
+        <a href="https://calendly.com/flowforwardconsultingllc-support/30min" target="_blank" class="cta-button" id="cta-button">Schedule a conversation</a>
+      </div>
+
+      <div class="footer-note">
+        Your full results have been emailed to ${state.user.email || 'your inbox'}.<br>
+        Built in Oklahoma City. Made for the operations leaders carrying the load.
+      </div>
+    </div>
+  `;
+
+  // Animate section bars after render
+  setTimeout(() => {
+    document.querySelectorAll('.section-row-fill').forEach(bar => {
+      const w = bar.style.width;
+      bar.style.width = '0%';
+      requestAnimationFrame(() => {
+        bar.style.width = w;
+      });
+    });
+  }, 100);
+
+  updateProgress();
+  scrollToTop();
+
+  // In production: send results to Kajabi / email service / your CRM here
+  console.log('Assessment complete:', {
+    user: state.user,
+    composite,
+    tier,
+    sectionScores: SECTIONS.map((s, i) => ({ name: s.name, score: getSectionScore(i) })),
+    lowestSection: SECTIONS[lowestIdx].name,
+    timestamp: new Date().toISOString()
+  });
+}
+
+// ==========================================
+// ACTIONS
+// ==========================================
+function startAssessment() {
+  state.currentScreen = 'intro';
+  state.currentSection = 0;
+  renderSectionIntro();
+}
+
+function startSection() {
+  state.currentScreen = 'question';
+  state.currentQuestion = 0;
+  renderQuestion();
+}
+
+function selectAnswer(value) {
+  const globalQ = getAnswerIndex(state.currentSection, state.currentQuestion);
+  state.answers[globalQ] = value;
+  // Visual update
+  document.querySelectorAll('.answer-btn').forEach(btn => {
+    btn.classList.toggle('selected', parseInt(btn.dataset.value) === value);
+  });
+  document.getElementById('next-btn').disabled = false;
+  updateProgress();
+}
+
+function nextQuestion() {
+  const globalQ = getAnswerIndex(state.currentSection, state.currentQuestion);
+  if (state.answers[globalQ] === null) return;
+
+  // Last question of last section -> optin
+  if (state.currentSection === 5 && state.currentQuestion === 5) {
+    state.currentScreen = 'optin';
+    renderOptin();
+    return;
+  }
+
+  // Last question of a section -> next section intro
+  if (state.currentQuestion === 5) {
+    state.currentSection += 1;
+    state.currentScreen = 'intro';
+    renderSectionIntro();
+    return;
+  }
+
+  // Otherwise advance to next question
+  state.currentQuestion += 1;
+  renderQuestion();
+}
+
+function prevQuestion() {
+  // Move backward through questions and section intros
+  if (state.currentQuestion > 0) {
+    state.currentQuestion -= 1;
+    renderQuestion();
+    return;
+  }
+  // First question of a section: go to that section's intro
+  if (state.currentQuestion === 0 && state.currentSection >= 0) {
+    if (state.currentSection === 0) {
+      // Back to welcome from very first question
+      state.currentScreen = 'welcome';
+      renderWelcome();
+      return;
+    }
+    // Go back to previous section's last question
+    state.currentSection -= 1;
+    state.currentQuestion = 5;
+    renderQuestion();
+  }
+}
+
+function prevFromOptin() {
+  state.currentScreen = 'question';
+  state.currentSection = 5;
+  state.currentQuestion = 5;
+  renderQuestion();
+}
+
+function submitOptin() {
+  const firstName = document.getElementById('firstName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const orgName = document.getElementById('orgName').value.trim();
+  const role = document.getElementById('role').value.trim();
+
+  // Light validation
+  if (!firstName) {
+    alert('Please share your first name so the results greeting is personal.');
+    document.getElementById('firstName').focus();
+    return;
+  }
+  if (!email || !email.includes('@')) {
+    alert('Please share a valid email so your full results can be delivered.');
+    document.getElementById('email').focus();
+    return;
+  }
+
+  state.user = { firstName, email, orgName, role };
+  state.currentScreen = 'results';
+  renderResults();
+}
+
+// ==========================================
+// INIT
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+  renderWelcome();
+});
+</script>
+</body>
+</html>
