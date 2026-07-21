@@ -1232,14 +1232,11 @@ function nextQuestion() {
   const globalQ = getAnswerIndex(state.currentSection, state.currentQuestion);
   if (state.answers[globalQ] === null) return;
 
-  // Last question of last section -> optin, unless we already have their
-  // name and email from the Kajabi registration link
+  // Last question of last section -> optin. Name and email pre-fill
+  // automatically when known from the Kajabi registration link, but the
+  // screen still shows so organization and role always get captured, and
+  // the visitor can correct their name or email if needed.
   if (state.currentSection === 5 && state.currentQuestion === 5) {
-    if (state.preRegistered) {
-      state.currentScreen = 'results';
-      renderResults();
-      return;
-    }
     state.currentScreen = 'optin';
     renderOptin();
     return;
